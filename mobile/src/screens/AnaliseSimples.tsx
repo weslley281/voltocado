@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, ScrollView, Alert } from 'react-native';
 import { api } from '../services/api';
+import GenericButton from '../components/GerenericButton';
 
 export default function AnaliseSimples() {
   const [tensao, setTensao] = useState('');
@@ -76,9 +77,9 @@ export default function AnaliseSimples() {
         onChangeText={setResistencia}
       />
 
-      <Button title="Calcular" onPress={calcular} />
-      <View style={{ height: 10 }} />
-      <Button title="Limpar" color="#888" onPress={limpar} />
+      <GenericButton button="primary" icon="calculator" color="white" size={24} title='Calcular' onPress={calcular} />
+
+      <GenericButton button='secondary' icon="backspace" color="white" size={24} title="Limpar" onPress={limpar} />
 
       {resultado !== '' && <Text style={styles.resultado}>{resultado}</Text>}
     </ScrollView>
