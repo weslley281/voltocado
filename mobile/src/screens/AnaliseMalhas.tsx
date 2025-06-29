@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, ScrollView, Alert } from 'react-native';
 import { api } from '../services/api';
-
+import LoadingSpinner from '../components/LoadingSpinner';
 
 export default function AnaliseMalhas() {
+  const [loading, setLoading] = useState(false);
   const [R11, setR11] = useState('');
   const [R12, setR12] = useState('');
   const [R21, setR21] = useState('');
@@ -34,6 +35,7 @@ export default function AnaliseMalhas() {
     };
 
     try {
+      setLoading(true);
       const response = await api.post('malhas', payload);
       const correntes = response.data.correntes;
 
@@ -45,6 +47,8 @@ export default function AnaliseMalhas() {
     } catch (error) {
       console.error(error);
       Alert.alert('Erro', 'Falha ao conectar com o servidor ou calcular as correntes.');
+    } finally {
+      setLoading(false); // <--- Desativa spinner
     }
   };
 
@@ -54,28 +58,33 @@ export default function AnaliseMalhas() {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.title}>Análise de Malhas (via API)</Text>
-
-      <Text style={styles.subtitle}>Equação da Malha 1</Text>
-      <TextInput style={styles.input} placeholder="R11 (Ω)" keyboardType="numeric" value={R11} onChangeText={setR11} />
-      <TextInput style={styles.input} placeholder="R12 (Ω)" keyboardType="numeric" value={R12} onChangeText={setR12} />
-      <TextInput style={styles.input} placeholder="V1 (V)" keyboardType="numeric" value={V1} onChangeText={setV1} />
-
-      <Text style={styles.subtitle}>Equação da Malha 2</Text>
-      <TextInput style={styles.input} placeholder="R21 (Ω)" keyboardType="numeric" value={R21} onChangeText={setR21} />
-      <TextInput style={styles.input} placeholder="R22 (Ω)" keyboardType="numeric" value={R22} onChangeText={setR22} />
-      <TextInput style={styles.input} placeholder="V2 (V)" keyboardType="numeric" value={V2} onChangeText={setV2} />
-
-      <Button title="Calcular Correntes" onPress={calcular} />
-      <View style={{ height: 10 }} />
-      <Button title="Limpar" color="#888" onPress={limpar} />
-
-      {resultado !== '' && (
-        <Text style={styles.resultado}>{resultado}</Text>
-      )}
-    </ScrollView>
+    <View style={{ flex: 1 }}>
+      <ScrollView contentContainerStyle={styles.container}>
+        <Text style={styles.title}>Análise de Malhas (via API)</Text>
+  
+        <Text style={styles.subtitle}>Equação da Malha 1</Text>
+        <TextInput style={styles.input} placeholder="R11 (Ω)" keyboardType="numeric" value={R11} onChangeText={setR11} />
+        <TextInput style={styles.input} placeholder="R12 (Ω)" keyboardType="numeric" value={R12} onChangeText={setR12} />
+        <TextInput style={styles.input} placeholder="V1 (V)" keyboardType="numeric" value={V1} onChangeText={setV1} />
+  
+        <Text style={styles.subtitle}>Equação da Malha 2</Text>
+        <TextInput style={styles.input} placeholder="R21 (Ω)" keyboardType="numeric" value={R21} onChangeText={setR21} />
+        <TextInput style={styles.input} placeholder="R22 (Ω)" keyboardType="numeric" value={R22} onChangeText={setR22} />
+        <TextInput style={styles.input} placeholder="V2 (V)" keyboardType="numeric" value={V2} onChangeText={setV2} />
+  
+        <Button title="Calcular Correntes" onPress={calcular} />
+        <View style={{ height: 10 }} />
+        <Button title="Limpar" color="#888" onPress={limpar} />
+  
+        {resultado !== '' && (
+          <Text style={styles.resultado}>{resultado}</Text>
+        )}
+      </ScrollView>
+  
+      {loading && <LoadingSpinner />}
+    </View>
   );
+  
 }
 
 const styles = StyleSheet.create({
