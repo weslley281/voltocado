@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, ScrollView, Alert } from 'react-native';
 import { api } from '../services/api';
 import GenericButton from '../components/GerenericButton';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 export default function AnaliseSimples() {
   const [loading, setLoading] = useState(false);
@@ -85,7 +86,8 @@ export default function AnaliseSimples() {
 
       <GenericButton button='secondary' icon="backspace" color="white" size={24} title="Limpar" onPress={limpar} />
 
-      {resultado !== '' && <Text style={styles.resultado}>{resultado}</Text>}
+      {loading ? <LoadingSpinner /> : <Text style={styles.resultado}>{resultado}</Text>}
+      {/* {resultado !== '' && <Text style={styles.resultado}>{resultado}</Text>} */}
     </ScrollView>
   );
 }
