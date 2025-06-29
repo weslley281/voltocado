@@ -2,12 +2,14 @@ import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import MenuButton from '../components/MenuButton';
+import Header from '../components/Header';
 
 export default function Home() {
   const navigation = useNavigation<any>();
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
+      <Header />
       <Text style={styles.title}>Análise de Circuitos Elétricos</Text>
 
       <MenuButton title="Análise Simples (Lei de Ohm)" onPress={() => navigation.navigate('AnaliseSimples')} />
