@@ -27,7 +27,7 @@ export default function AnaliseSimples() {
     };
 
     try {
-      const response = await api.post('/ohm', payload);
+      const response = await api.post('ohm', payload);
       const data = response.data;
 
       const resultadoFormatado = 

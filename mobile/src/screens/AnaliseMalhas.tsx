@@ -34,7 +34,7 @@ export default function AnaliseMalhas() {
     };
 
     try {
-      const response = await api.post('/malhas', payload);
+      const response = await api.post('malhas', payload);
       const correntes = response.data.correntes;
 
       const resultadoFormatado = correntes
