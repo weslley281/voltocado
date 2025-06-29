@@ -5,8 +5,6 @@ export default function Header() {
   return (
     <View style={styles.header}>
         <Image source={require('../images/logo.png')} style={styles.logo} />
-        <Text style={styles.title}>Voltocado</Text>
-        <Text style={styles.subtitle}>Análise de Circuitos Elétricos</Text>
     </View>
   );
 }
@@ -30,17 +28,8 @@ const styles = StyleSheet.create({
         borderRadius: 10,
     },
     logo: {
-        width: 100,
-        height: 100,
+        width: 150,
+        height: 150,
         marginBottom: 10,
-    },
-    title: {
-        color: '#fff',
-        fontSize: 24,
-        fontWeight: 'bold',
-    },
-    subtitle: {
-        color: '#fff',
-        fontSize: 16,
-    },
+    }
 })
