@@ -3,10 +3,10 @@ import { View, Text, StyleSheet, Image } from "react-native";
 
 export default function Header() {
   return (
-      <View style={styles.header}>
-          <Image source={{ uri: 'https://example.com/logo.png' }} style={styles.logo} />
-      <Text style={styles.title}>Voltocado</Text>
-      <Text style={styles.subtitle}>Análise de Circuitos Elétricos</Text>
+    <View style={styles.header}>
+        <Image source={require('../images/logo.png')} style={styles.logo} />
+        <Text style={styles.title}>Voltocado</Text>
+        <Text style={styles.subtitle}>Análise de Circuitos Elétricos</Text>
     </View>
   );
 }
