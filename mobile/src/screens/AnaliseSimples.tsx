@@ -4,6 +4,7 @@ import { api } from '../services/api';
 import GenericButton from '../components/GerenericButton';
 
 export default function AnaliseSimples() {
+  const [loading, setLoading] = useState(false);
   const [tensao, setTensao] = useState('');
   const [corrente, setCorrente] = useState('');
   const [resistencia, setResistencia] = useState('');
@@ -28,6 +29,7 @@ export default function AnaliseSimples() {
     };
 
     try {
+      setLoading(true);
       const response = await api.post('ohm', payload);
       const data = response.data;
 
@@ -41,6 +43,8 @@ export default function AnaliseSimples() {
     } catch (error: any) {
       console.error(error);
       Alert.alert('Erro', error.response?.data?.message || 'Erro ao conectar com o servidor.');
+    } finally {
+      setLoading(false); // <--- Desativa spinner
     }
   };
 
