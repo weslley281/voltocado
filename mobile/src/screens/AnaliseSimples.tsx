@@ -1,41 +1,45 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, ScrollView, Alert } from 'react-native';
-import GenericButton from '../components/GerenericButton';
+import { View, Text, TextInput, Button, StyleSheet, ScrollView, Alert } from 'react-native';
+import { api } from '../services/api';
 
 export default function AnaliseSimples() {
   const [tensao, setTensao] = useState('');
   const [corrente, setCorrente] = useState('');
   const [resistencia, setResistencia] = useState('');
   const [resultado, setResultado] = useState('');
-  const [resultadoPotencia, setResultadoPotencia] = useState('');
 
-  const calcular = () => {
-    const v = parseFloat(tensao);
-    const i = parseFloat(corrente);
-    const r = parseFloat(resistencia);
+  const calcular = async () => {
+    const v = tensao ? parseFloat(tensao) : null;
+    const i = corrente ? parseFloat(corrente) : null;
+    const r = resistencia ? parseFloat(resistencia) : null;
 
-    const valoresInformados = [!isNaN(v), !isNaN(i), !isNaN(r)].filter(Boolean).length;
+    const informados = [v, i, r].filter(val => val !== null && !isNaN(val)).length;
 
-    if (valoresInformados < 2) {
-      Alert.alert('Erro', 'Informe pelo menos dois valores para calcular o terceiro.');
+    if (informados < 2) {
+      Alert.alert('Erro', 'Informe pelo menos dois valores para calcular os outros.');
       return;
     }
 
-    if (isNaN(v)) {
-      const resultadoTensao = i * r;
-      setResultado(`Tensão calculada: ${resultadoTensao.toFixed(2)} V`);
-      const potencia = i * resultadoTensao;
-      setResultadoPotencia(`Potência calculada: ${potencia.toFixed(2)} W`);
-    } else if (isNaN(i)) {
-      const resultadoCorrente = v / r;
-      setResultado(`Corrente calculada: ${resultadoCorrente.toFixed(2)} A`);
-      const potencia = v * resultadoCorrente;
-      setResultadoPotencia(`Potência calculada: ${potencia.toFixed(2)} W`);
-    } else if (isNaN(r)) {
-      const resultadoResistencia = v / i;
-      setResultado(`Resistência calculada: ${resultadoResistencia.toFixed(2)} Ω`);
-      const potencia = v * i;
-      setResultadoPotencia(`Potência calculada: ${potencia.toFixed(2)} W`);
+    const payload = {
+      tensao: isNaN(v!) ? null : v,
+      corrente: isNaN(i!) ? null : i,
+      resistencia: isNaN(r!) ? null : r
+    };
+
+    try {
+      const response = await api.post('/ohm', payload);
+      const data = response.data;
+
+      const resultadoFormatado = 
+        `Tensão: ${data.tensao.toFixed(2)} V\n` +
+        `Corrente: ${data.corrente.toFixed(2)} A\n` +
+        `Resistência: ${data.resistencia.toFixed(2)} Ω\n` +
+        `Potência: ${data.potencia.toFixed(2)} W`;
+
+      setResultado(resultadoFormatado);
+    } catch (error: any) {
+      console.error(error);
+      Alert.alert('Erro', error.response?.data?.message || 'Erro ao conectar com o servidor.');
     }
   };
 
@@ -44,41 +48,39 @@ export default function AnaliseSimples() {
     setCorrente('');
     setResistencia('');
     setResultado('');
-    setResultadoPotencia('');
   };
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.title}>Análise de Circuitos Elétricos Simples</Text>
+      <Text style={styles.title}>Análise de Circuitos Elétricos Simples (API)</Text>
 
       <TextInput
         style={styles.input}
-        keyboardType="numeric"
         placeholder="Tensão (V)"
+        keyboardType="numeric"
         value={tensao}
         onChangeText={setTensao}
       />
       <TextInput
         style={styles.input}
-        keyboardType="numeric"
         placeholder="Corrente (A)"
+        keyboardType="numeric"
         value={corrente}
         onChangeText={setCorrente}
       />
       <TextInput
         style={styles.input}
-        keyboardType="numeric"
         placeholder="Resistência (Ω)"
+        keyboardType="numeric"
         value={resistencia}
         onChangeText={setResistencia}
       />
 
-      <GenericButton button="primary" icon="calculator" color="white" size={24} title='Calcular' onPress={calcular} />
-
-      <GenericButton button='secondary' icon="backspace" color="white" size={24} title="Limpar" onPress={limpar} />
+      <Button title="Calcular" onPress={calcular} />
+      <View style={{ height: 10 }} />
+      <Button title="Limpar" color="#888" onPress={limpar} />
 
       {resultado !== '' && <Text style={styles.resultado}>{resultado}</Text>}
-      {resultadoPotencia !== '' && <Text style={styles.resultado}>{resultadoPotencia}</Text>}
     </ScrollView>
   );
 }
