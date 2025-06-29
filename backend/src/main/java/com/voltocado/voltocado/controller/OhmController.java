@@ -1,5 +1,6 @@
 package com.voltocado.voltocado.controller;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import com.voltocado.voltocado.dto.OhmRequestDTO;
 import com.voltocado.voltocado.dto.OhmResponseDTO;
 import com.voltocado.voltocado.service.OhmService;
@@ -19,5 +20,15 @@ public class OhmController {
     public ResponseEntity<OhmResponseDTO> calcular(@RequestBody @Valid OhmRequestDTO dto) {
         OhmResponseDTO resposta = ohmService.calcular(dto);
         return ResponseEntity.ok(resposta);
+    }
+
+    @GetMapping
+    public ResponseEntity<?> inicial() {
+        return ResponseEntity.ok().body(
+            java.util.Map.of("message", "API Ohm está funcionando", 
+                             "status", "OK", 
+                             "version", "1.0.0"
+                             )
+        );
     }
 }

@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: voltocado
+  security:
+    user:
+      name: voltocado
+      password: voltocado
+      roles:
+        - USER
+        - ADMIN

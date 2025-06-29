@@ -9,5 +9,6 @@ public class OhmResponseDTO {
     private Double tensao;
     private Double corrente;
     private Double resistencia;
+    private Double potencia;
 }
 

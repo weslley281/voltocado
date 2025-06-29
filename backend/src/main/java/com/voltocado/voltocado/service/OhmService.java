@@ -12,6 +12,7 @@ public class OhmService {
         Double tensao = request.getTensao();
         Double corrente = request.getCorrente();
         Double resistencia = request.getResistencia();
+        Double potencia = (double) 0;
 
         int informados = 0;
         if (tensao != null) informados++;
@@ -30,6 +31,8 @@ public class OhmService {
             resistencia = tensao / corrente;
         }
 
-        return new OhmResponseDTO(tensao, corrente, resistencia);
+        potencia = tensao * corrente;
+
+        return new OhmResponseDTO(tensao, corrente, resistencia, potencia);
     }
 }
