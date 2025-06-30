@@ -36,6 +36,7 @@ export default function AnaliseMalhas() {
 
     try {
       setLoading(true);
+      console.log('Enviando dados para o servidor:', payload);
       const response = await api.post('malhas', payload);
       const correntes = response.data.correntes;
 
