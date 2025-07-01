@@ -96,7 +96,10 @@ export default function AnaliseMalhas() {
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={{ flex: 1 }}>
-          <ScrollView contentContainerStyle={styles.container}>
+          <ScrollView
+            contentContainerStyle={styles.container}
+            keyboardShouldPersistTaps="handled"
+          >
             <Text style={styles.title}>Análise de Malhas (via API)</Text>
 
             <Text style={styles.subtitle}>Equação da Malha 1</Text>
