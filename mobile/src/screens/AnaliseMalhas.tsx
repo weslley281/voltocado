@@ -16,6 +16,7 @@ import {
 import { api } from '../services/api';
 import LoadingSpinner from '../components/LoadingSpinner';
 import GenericButton from '../components/GerenericButton';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 export default function AnaliseMalhas() {
   const [loading, setLoading] = useState(false);
@@ -96,9 +97,11 @@ export default function AnaliseMalhas() {
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={{ flex: 1 }}>
-          <ScrollView
+          <KeyboardAwareScrollView
             contentContainerStyle={styles.container}
-            keyboardShouldPersistTaps="handled"
+            enableOnAndroid
+            extraScrollHeight={20}
+            keyboardOpeningTime={0}
           >
             <Text style={styles.title}>Análise de Malhas (via API)</Text>
 
@@ -168,7 +171,7 @@ export default function AnaliseMalhas() {
             {resultado !== '' && (
               <Text style={styles.resultado}>{resultado}</Text>
             )}
-          </ScrollView>
+          </KeyboardAwareScrollView>
 
           {loading && <LoadingSpinner />}
         </View>
