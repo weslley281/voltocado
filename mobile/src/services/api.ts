@@ -8,7 +8,7 @@ const password = 'voltocado';
 const authHeader = 'Basic ' + encode(`${username}:${password}`);
 
 export const api = axios.create({
-  baseURL: "http://192.168.11.235:8080/api/", // URL base do servidor
+  baseURL: "http://192.168.0.16:8080/api/", // URL base do servidor
     timeout: 10000, // Tempo limite de 10 segundos
   headers: {
         Authorization: authHeader,
