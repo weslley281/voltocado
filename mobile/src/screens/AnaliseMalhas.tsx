@@ -1,5 +1,14 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, ScrollView, Alert, GestureResponderEvent } from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  Button,
+  StyleSheet,
+  ScrollView,
+  Alert,
+  GestureResponderEvent,
+} from 'react-native';
 import { api } from '../services/api';
 import LoadingSpinner from '../components/LoadingSpinner';
 import GenericButton from '../components/GerenericButton';
@@ -22,7 +31,7 @@ export default function AnaliseMalhas() {
     const v1 = parseFloat(V1);
     const v2 = parseFloat(V2);
 
-    if ([a, b, c, d, v1, v2].some(val => isNaN(val))) {
+    if ([a, b, c, d, v1, v2].some((val) => isNaN(val))) {
       Alert.alert('Erro', 'Preencha todos os campos corretamente.');
       return;
     }
@@ -30,9 +39,9 @@ export default function AnaliseMalhas() {
     const payload = {
       coeficientes: [
         [a, b],
-        [c, d]
+        [c, d],
       ],
-      fontes: [v1, v2]
+      fontes: [v1, v2],
     };
 
     try {
@@ -42,51 +51,108 @@ export default function AnaliseMalhas() {
       const correntes = response.data.correntes;
 
       const resultadoFormatado = correntes
-        .map((i: number, index: number) => `Corrente I${index + 1}: ${i.toFixed(2)} A`)
+        .map(
+          (i: number, index: number) =>
+            `Corrente I${index + 1}: ${i.toFixed(2)} A`
+        )
         .join('\n');
 
       setResultado(resultadoFormatado);
     } catch (error) {
       console.error(error);
-      Alert.alert('Erro', 'Falha ao conectar com o servidor ou calcular as correntes.');
+      Alert.alert(
+        'Erro',
+        'Falha ao conectar com o servidor ou calcular as correntes.'
+      );
     } finally {
       setLoading(false); // <--- Desativa spinner
     }
   };
 
   const limpar = () => {
-    setR11(''); setR12(''); setR21(''); setR22('');
-    setV1(''); setV2(''); setResultado('');
+    setR11('');
+    setR12('');
+    setR21('');
+    setR22('');
+    setV1('');
+    setV2('');
+    setResultado('');
   };
 
   return (
     <View style={{ flex: 1 }}>
       <ScrollView contentContainerStyle={styles.container}>
         <Text style={styles.title}>Análise de Malhas (via API)</Text>
-  
+
         <Text style={styles.subtitle}>Equação da Malha 1</Text>
-        <TextInput style={styles.input} placeholder="R11 (Ω)" keyboardType="numeric" value={R11} onChangeText={setR11} />
-        <TextInput style={styles.input} placeholder="R12 (Ω)" keyboardType="numeric" value={R12} onChangeText={setR12} />
-        <TextInput style={styles.input} placeholder="V1 (V)" keyboardType="numeric" value={V1} onChangeText={setV1} />
-  
+        <TextInput
+          style={styles.input}
+          placeholder="R11 (Ω)"
+          keyboardType="numeric"
+          value={R11}
+          onChangeText={setR11}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="R12 (Ω)"
+          keyboardType="numeric"
+          value={R12}
+          onChangeText={setR12}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="V1 (V)"
+          keyboardType="numeric"
+          value={V1}
+          onChangeText={setV1}
+        />
+
         <Text style={styles.subtitle}>Equação da Malha 2</Text>
-        <TextInput style={styles.input} placeholder="R21 (Ω)" keyboardType="numeric" value={R21} onChangeText={setR21} />
-        <TextInput style={styles.input} placeholder="R22 (Ω)" keyboardType="numeric" value={R22} onChangeText={setR22} />
-        <TextInput style={styles.input} placeholder="V2 (V)" keyboardType="numeric" value={V2} onChangeText={setV2} />
-  
-        <GenericButton title="Calcular Correntes" color="white" icon="calculator" size={24} button="primary" onPress={calcular}  />
-        <View style={{ height: 10 }} />
-        <Button title="Limpar" color="#888" onPress={limpar} />
-  
-        {resultado !== '' && (
-          <Text style={styles.resultado}>{resultado}</Text>
-        )}
+        <TextInput
+          style={styles.input}
+          placeholder="R21 (Ω)"
+          keyboardType="numeric"
+          value={R21}
+          onChangeText={setR21}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="R22 (Ω)"
+          keyboardType="numeric"
+          value={R22}
+          onChangeText={setR22}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="V2 (V)"
+          keyboardType="numeric"
+          value={V2}
+          onChangeText={setV2}
+        />
+
+        <GenericButton
+          title="Calcular Correntes"
+          color="white"
+          icon="calculator"
+          size={24}
+          button="primary"
+          onPress={calcular}
+        />
+        <GenericButton
+          button="secondary"
+          icon="backspace"
+          color="white"
+          size={24}
+          title="Limpar"
+          onPress={limpar}
+        />
+
+        {resultado !== '' && <Text style={styles.resultado}>{resultado}</Text>}
       </ScrollView>
-  
+
       {loading && <LoadingSpinner />}
     </View>
   );
-  
 }
 
 const styles = StyleSheet.create({
