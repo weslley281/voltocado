@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, ScrollView, Alert } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, ScrollView, Alert, GestureResponderEvent } from 'react-native';
 import { api } from '../services/api';
 import LoadingSpinner from '../components/LoadingSpinner';
+import GenericButton from '../components/GerenericButton';
 
 export default function AnaliseMalhas() {
   const [loading, setLoading] = useState(false);
@@ -73,7 +74,7 @@ export default function AnaliseMalhas() {
         <TextInput style={styles.input} placeholder="R22 (Ω)" keyboardType="numeric" value={R22} onChangeText={setR22} />
         <TextInput style={styles.input} placeholder="V2 (V)" keyboardType="numeric" value={V2} onChangeText={setV2} />
   
-        <Button title="Calcular Correntes" onPress={calcular} />
+        <GenericButton title="Calcular Correntes" color="white" icon="calculator" size={24} button="primary" onPress={calcular}  />
         <View style={{ height: 10 }} />
         <Button title="Limpar" color="#888" onPress={limpar} />
   
