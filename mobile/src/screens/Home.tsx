@@ -14,9 +14,6 @@ export default function Home() {
 
       <MenuButton title="Análise Simples (Lei de Ohm)" onPress={() => navigation.navigate('AnaliseSimples')} />
       <MenuButton title="Análise de Malhas" onPress={() => navigation.navigate('AnaliseMalhas')} />
-      <MenuButton title="Análise de Corrente" onPress={() => navigation.navigate('AnaliseCorrente')} />
-      <MenuButton title="Análise de Tensão" onPress={() => navigation.navigate('AnaliseTensao')} />
-      <MenuButton title="Análise de Potência" onPress={() => navigation.navigate('AnalisePotencia')} />
     </ScrollView>
   );
 }
