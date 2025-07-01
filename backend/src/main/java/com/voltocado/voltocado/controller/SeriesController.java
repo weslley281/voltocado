@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/serie")
 public class SeriesController {
-
     private final SeriesService seriesService;
 
     public SeriesController(SeriesService seriesService) {
