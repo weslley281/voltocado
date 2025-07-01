@@ -8,6 +8,10 @@ import {
   ScrollView,
   Alert,
   GestureResponderEvent,
+  KeyboardAvoidingView,
+  TouchableWithoutFeedback,
+  Platform,
+  Keyboard,
 } from 'react-native';
 import { api } from '../services/api';
 import LoadingSpinner from '../components/LoadingSpinner';
@@ -86,78 +90,87 @@ export default function AnaliseMalhas() {
   };
 
   return (
-    <View style={{ flex: 1 }}>
-      <ScrollView contentContainerStyle={styles.container}>
-        <Text style={styles.title}>Análise de Malhas (via API)</Text>
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={{ flex: 1 }}>
+          <ScrollView contentContainerStyle={styles.container}>
+            <Text style={styles.title}>Análise de Malhas (via API)</Text>
 
-        <Text style={styles.subtitle}>Equação da Malha 1</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="R11 (Ω)"
-          keyboardType="numeric"
-          value={R11}
-          onChangeText={setR11}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="R12 (Ω)"
-          keyboardType="numeric"
-          value={R12}
-          onChangeText={setR12}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="V1 (V)"
-          keyboardType="numeric"
-          value={V1}
-          onChangeText={setV1}
-        />
+            <Text style={styles.subtitle}>Equação da Malha 1</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="R11 (Ω)"
+              keyboardType="numeric"
+              value={R11}
+              onChangeText={setR11}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="R12 (Ω)"
+              keyboardType="numeric"
+              value={R12}
+              onChangeText={setR12}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="V1 (V)"
+              keyboardType="numeric"
+              value={V1}
+              onChangeText={setV1}
+            />
 
-        <Text style={styles.subtitle}>Equação da Malha 2</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="R21 (Ω)"
-          keyboardType="numeric"
-          value={R21}
-          onChangeText={setR21}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="R22 (Ω)"
-          keyboardType="numeric"
-          value={R22}
-          onChangeText={setR22}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="V2 (V)"
-          keyboardType="numeric"
-          value={V2}
-          onChangeText={setV2}
-        />
+            <Text style={styles.subtitle}>Equação da Malha 2</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="R21 (Ω)"
+              keyboardType="numeric"
+              value={R21}
+              onChangeText={setR21}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="R22 (Ω)"
+              keyboardType="numeric"
+              value={R22}
+              onChangeText={setR22}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="V2 (V)"
+              keyboardType="numeric"
+              value={V2}
+              onChangeText={setV2}
+            />
 
-        <GenericButton
-          title="Calcular Correntes"
-          color="white"
-          icon="calculator"
-          size={24}
-          button="primary"
-          onPress={calcular}
-        />
-        <GenericButton
-          button="secondary"
-          icon="backspace"
-          color="white"
-          size={24}
-          title="Limpar"
-          onPress={limpar}
-        />
+            <GenericButton
+              title="Calcular Correntes"
+              color="white"
+              icon="calculator"
+              size={24}
+              button="primary"
+              onPress={calcular}
+            />
+            <GenericButton
+              button="secondary"
+              icon="backspace"
+              color="white"
+              size={24}
+              title="Limpar"
+              onPress={limpar}
+            />
 
-        {resultado !== '' && <Text style={styles.resultado}>{resultado}</Text>}
-      </ScrollView>
+            {resultado !== '' && (
+              <Text style={styles.resultado}>{resultado}</Text>
+            )}
+          </ScrollView>
 
-      {loading && <LoadingSpinner />}
-    </View>
+          {loading && <LoadingSpinner />}
+        </View>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 }
 
