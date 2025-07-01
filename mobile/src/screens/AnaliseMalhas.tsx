@@ -58,12 +58,18 @@ export default function AnaliseMalhas() {
         .join('\n');
 
       setResultado(resultadoFormatado);
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
-      Alert.alert(
-        'Erro',
-        'Falha ao conectar com o servidor ou calcular as correntes.'
-      );
+
+      // Se a resposta vier com status 400 e um JSON com 'message', mostramos essa mensagem
+      if (error.response?.status === 400 && error.response.data?.message) {
+        Alert.alert('Erro de cálculo', error.response.data.message);
+      } else {
+        Alert.alert(
+          'Erro',
+          'Falha ao conectar com o servidor ou calcular as correntes.'
+        );
+      }
     } finally {
       setLoading(false); // <--- Desativa spinner
     }
