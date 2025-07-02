@@ -1,18 +1,19 @@
 import React from 'react';
 import { TouchableOpacity, Text, StyleSheet, GestureResponderEvent } from 'react-native';
-import AntDesign from '@expo/vector-icons/AntDesign';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 
 interface MenuButtonProps {
   title: string;
+  icon: any;
   onPress: (event: GestureResponderEvent) => void;
 }
 
-export default function MenuButton({ title, onPress }: MenuButtonProps) {
+export default function MenuButton({ title, icon, onPress }: MenuButtonProps) {
   return (
     <TouchableOpacity style={styles.button} onPress={onPress} activeOpacity={0.8}>
-      <AntDesign name="barschart" size={24} color="#fff" style={{ position: 'absolute', left: 16, top: 16 }} />
+      <MaterialCommunityIcons name={icon} size={24} color="#fff" style={{ position: 'absolute', left: 16, top: 16 }} />
       <Text style={styles.text}>{title}</Text>
-      <AntDesign name="right" size={24} color="#fff" style={{ position: 'absolute', right: 16, top: 16 }} />
+      <MaterialCommunityIcons name="form-select" size={24} color="#fff" style={{ position: 'absolute', right: 16, top: 16 }} />
     </TouchableOpacity>
   );
 }

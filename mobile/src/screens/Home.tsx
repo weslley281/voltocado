@@ -12,8 +12,10 @@ export default function Home() {
       <Header />
       <Text style={styles.title}>Análise de Circuitos Elétricos</Text>
 
-      <MenuButton title="Análise Simples (Lei de Ohm)" onPress={() => navigation.navigate('AnaliseSimples')} />
-      <MenuButton title="Análise de Malhas" onPress={() => navigation.navigate('AnaliseMalhas')} />
+      <MenuButton title="Análise Simples (Lei de Ohm)" icon="electric-switch" onPress={() => navigation.navigate('AnaliseSimples')} />
+      <MenuButton title="Análise de Malhas" icon="select-compare" onPress={() => navigation.navigate('AnaliseMalhas')} />
+      <MenuButton title="Análise em Paralelo" icon="format-list-bulleted" onPress={() => navigation.navigate('AnaliseParalelo')} />
+      <MenuButton title="Análise em Série" icon="format-list-numbered" onPress={() => navigation.navigate('AnaliseSerie')} />
     </ScrollView>
   );
 }
