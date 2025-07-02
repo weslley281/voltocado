@@ -96,7 +96,14 @@ export default function AnaliseParalelo() {
               </View>
             ))}
 
-            <Button title="Adicionar Resistência" onPress={adicionarCampo} color="#145291" />
+            <GenericButton
+              title="Adicionar Resistência"
+                icon="plus"
+                button="success"
+                color="white"
+                size={24}
+                onPress={adicionarCampo}
+            />
 
             <GenericButton
               title="Calcular Paralelo"
