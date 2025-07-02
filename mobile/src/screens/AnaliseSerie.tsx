@@ -37,9 +37,12 @@ export default function AnaliseSerie() {
   };
 
   const calcular = async () => {
-    const valores = resistencias.map(r => parseFloat(r));
-    if (valores.some(v => isNaN(v) || v < 0)) {
-      Alert.alert('Erro', 'Preencha todas as resistências com valores válidos (≥ 0).');
+    const valores = resistencias.map((r) => parseFloat(r));
+    if (valores.some((v) => isNaN(v) || v < 0)) {
+      Alert.alert(
+        'Erro',
+        'Preencha todas as resistências com valores válidos (≥ 0).'
+      );
       return;
     }
 
@@ -51,7 +54,8 @@ export default function AnaliseSerie() {
       const equivalente = response.data.equivalentResistance;
       setResultado(`Resistência Equivalente: ${equivalente.toFixed(2)} Ω`);
     } catch (error: any) {
-      const msg = error.response?.data?.message || 'Erro ao conectar com o servidor.';
+      const msg =
+        error.response?.data?.message || 'Erro ao conectar com o servidor.';
       Alert.alert('Erro de cálculo', msg);
       setResultado(null);
     } finally {
@@ -85,7 +89,7 @@ export default function AnaliseSerie() {
                   placeholder={`Resistência R${index + 1} (Ω)`}
                   keyboardType="numeric"
                   value={valor}
-                  onChangeText={texto => atualizarValor(texto, index)}
+                  onChangeText={(texto) => atualizarValor(texto, index)}
                 />
                 <Button
                   title="−"
@@ -95,7 +99,14 @@ export default function AnaliseSerie() {
               </View>
             ))}
 
-            <Button title="Adicionar Resistência" onPress={adicionarCampo} color="#145291" />
+            <GenericButton
+              title="Adicionar Resistência"
+              icon="plus"
+              button="success"
+              color="white"
+              size={24}
+              onPress={adicionarCampo}
+            />
 
             <GenericButton
               title="Calcular Série"
@@ -114,9 +125,7 @@ export default function AnaliseSerie() {
               onPress={limpar}
             />
 
-            {resultado && (
-              <Text style={styles.resultado}>{resultado}</Text>
-            )}
+            {resultado && <Text style={styles.resultado}>{resultado}</Text>}
           </KeyboardAwareScrollView>
 
           {loading && <LoadingSpinner />}
